@@ -16,8 +16,8 @@ class TestTextNode(unittest.TestCase):
 
 
 	def test_eq3(self):
-		node = TextNode("This is a text node", TextType.NORMAL, "https://www.boot.dev")
-		node2 = TextNode("This is a text node", TextType.NORMAL, "https://www.boot.dev")
+		node = TextNode("This is a text node", TextType.TEXT, "https://www.boot.dev")
+		node2 = TextNode("This is a text node", TextType.TEXT, "https://www.boot.dev")
 		self.assertEqual(node, node2)
 
 
