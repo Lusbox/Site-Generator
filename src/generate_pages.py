@@ -1,11 +1,12 @@
 import os
 import re
 
+
 from markdown_to_html import *
 from htmlnode import *
 from extract_title import *
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
 	path_list = os.listdir(dir_path_content)
 	for path in path_list:
 		full_item_path = os.path.join(dir_path_content, path)
@@ -16,7 +17,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
 		if os.path.isdir(full_item_path):
 			os.makedirs(os.path.join(dest_dir_path, relative_path), exist_ok=True)
 
-			generate_pages_recursive(full_item_path, template_path, dest_item_path)
+			generate_pages_recursive(full_item_path, template_path, dest_item_path, basepath)
 
 		elif full_item_path.endswith('.md'):
 			with open(full_item_path, 'r') as file:
@@ -31,6 +32,7 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
 			title = extract_title(md_content)
 
 			template = template_content.replace("{{ Title }}", title).replace("{{ Content }}", html_string)
+			template = template.replace('href="/', 'href="{basepath}').replace('src="/', 'src="{basepath}')
 
 			dest_html_path = dest_item_path.replace('.md', '.html')
 
