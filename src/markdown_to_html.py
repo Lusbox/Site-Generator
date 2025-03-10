@@ -22,7 +22,8 @@ def markdown_to_html_node(markdown):
 
 		if block_type == BlockType.QUOTE:
 			q_node = HTMLNode("blockquote", None)
-			children = text_to_children(block)
+			cleaned_block = "\n".join([line.lstrip('>').strip() for line in block.split('\n')])
+			children = text_to_children(cleaned_block)
 			q_node.children = children
 			div.children.append(q_node)
 
